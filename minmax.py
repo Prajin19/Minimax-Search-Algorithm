@@ -126,32 +126,18 @@ class Game:
         elif result == '.':
             return (0, 0, 0)
 
-        '''
-        TYPE THE CODE HERE BY REFERRING TO THE BELOW EXPLANATION.
-        Nested Loops (for i in range(0, 3), for j in range(0, 3)):
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if self.current_state[i][j] == '.':
+                    self.current_state[i][j] = 'X'
+                    (m, max_i, max_j) = self.max()
+                    if m < minv:
+                        minv = m
+                        qx = i
+                        qy = j
+                    self.current_state[i][j] = '.'
+        return (minv, qx, qy)
 
-These loops iterate over all the cells of the 3x3 Tic-Tac-Toe board (current_state), checking each cell's position (i, j).
-Checking for an Empty Cell (if self.current_state[i][j] == '.'):
-
-The condition self.current_state[i][j] == '.' ensures that the AI only considers moves in cells that are currently empty. Empty cells are represented by ..
-Simulating a Move (self.current_state[i][j] = 'O'):
-
-If the cell is empty, the AI temporarily places its marker 'O' in that position, simulating a potential move.
-Recursive Minimax Call ((m, min_i, min_j) = self.min()):
-
-After making the move, the AI calls the min() function. This function simulates the opponent’s (player 'X') move, assuming the opponent will play optimally.
-The function min() will return a value m which represents the best possible outcome for the opponent if the AI makes this move.
-Evaluating the Move (if m > maxv:):
-
-The AI wants to maximize its chances of winning, so it compares the result m of the simulated move to the current best score (maxv).
-If the simulated move is better than any previously considered moves, it updates maxv (the best value for player 'O'), and stores the coordinates (px, py) of the current best move.
-Undoing the Simulated Move (self.current_state[i][j] = '.'):
-
-After evaluating the move, the AI resets the cell back to empty (.), undoing the simulated move. This is necessary to test other possible moves in other cells.
-Returning the Best Move (return (maxv, px, py)):
-
-After evaluating all possible moves, the function returns the best possible outcome (maxv) and the coordinates (px, py) of the best move for player 'O'.
-        '''
     def play(self):
         while True:
             self.draw_board()
